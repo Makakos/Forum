@@ -30,9 +30,10 @@ namespace Forum.Controllers
         public IActionResult Discussion(int id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-         
+          
             TempData["DiscussionId"] = id;
             ViewBag.Url = $"/Discussions/Discussion/{id}";
+            TempData["Url"] = ViewBag.Url;
             Discussion discussion = dataManager.discussionsRepository.GetDiscussionById(id);
             if (dataManager.usersRepository.GetUserById(discussion.UserId) != null)
             {

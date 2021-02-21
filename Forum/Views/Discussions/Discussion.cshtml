@@ -6,7 +6,10 @@
 
 <script src="~/js/ckeditor/ckeditor.js" type="text/javascript"></script>
 
+<div id="PlaceHolderHere">
+    <input type="hidden" class="currentUrl" value="@ViewBag.Url">
 
+</div>
 
 <div>
 
@@ -15,7 +18,7 @@
         {
 
 
-            <div class="row forBorder">
+            <div class="row border forBorder">
 
                 <div class="col-sm-2 bg-dark">
 
@@ -34,13 +37,13 @@
                 </div>
 
                 <div class="col-sm-10 ">
-                   
-                        <p>
-                            <h3 style="display:block"> @($"{ @Model.Discussion.Name}")</h3>
-                        </p>
 
-                        <p class="discussionDescription">@($"{ @Model.Discussion.Description}")</p>
-                
+                    <p>
+                        <h3 style="display:block"> @($"{ @Model.Discussion.Name}")</h3>
+                    </p>
+
+                    <p class="discussionDescription">@($"{ @Model.Discussion.Description}")</p>
+
 
 
                 </div>
@@ -49,86 +52,99 @@
             </div>
 
             <br />
+            <br />
 
-           
-        @foreach (Message message in Model.Discussion.Messages)
-        {
+            @foreach (Message message in Model.Discussion.Messages)
+            {
 
 
-            <div id="PlaceHolderHere">
-                <input type="hidden" class="currentUrl" value="@ViewBag.Url">
-                @*
-                <input type="hidden" id="message" value="@message.Text">*@
-            </div>
-            <div class="row forBorder">
 
-                <div class="col-sm-2 bg-dark">
+                <div class="row border forBorder">
 
-                    <div class="row ">
-                        @if (message.User.Avatar != null)
+                    <div class="col-sm-2 bg-dark">
+
+                        <div class="row ">
+                            @if (message.User.Avatar != null)
+                            {
+                                <img style='width:100%; max-height:140px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(message.User.Avatar))" />
+                            }
+                        </div>
+                        <div class="row text-light">
+                            @message.User.UserName
+                        </div>
+                        <div class="row text-light">
+                            @message.Date
+                        </div>
+                    </div>
+
+                    <div class="col-sm-10 ">
+
+                        <p id="text @message.Id">@($"{ message.Text}")</p>
+
+
+
+
+                        @*//редактировать сообщение может тольок тот кто его написал*@
+                        @if (message.UserId == Model.UserId)
                         {
-                            <img style='width:100%; max-height:140px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(message.User.Avatar))" />
+                            <div class="row ">
+                                <a id="@message.Id" href="#" type="button" data-toggle="ajax-model" data-target="#editMessage"
+                                   data-url="@Url.Action("Edit","Messages",new { area = "User" })">
+                                    Edit
+                                </a>
+
+                            </div>
+                            <br />
                         }
                     </div>
-                    <div class="row text-light">
-                        @message.User.UserName
-                    </div>
-                    <div class="row text-light">
-                        @message.Date
-                    </div>
+
+
                 </div>
+                <br />
 
-                <div class="col-sm-10 ">
-                   
-                        <p id="text @message.Id" >@($"{ message.Text}")</p>
+            }
+            <br />
+            <form id="myForm" asp-area="User" asp-controller="Messages" asp-action="Create" method="post">
 
+                <input class="currentId" type="hidden" name="redirectUrl" value="@ViewBag.Url ">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="row">
+
+
+
+                        <div class="form-group">
+                            <input id="addMessage" class="btn btn-primary" type="submit" value="Add a new message" />
+                        </div>
+
+
+
+                    </div>
+                }
+                else
+                {
+                <div class="row">
+                    
+                            <span>
+                                To write messages
+                                <a href="@Url.Action("Login", "Account", new { returnUrl=TempData["Url"]})"> Log in </a> or
+                                <a asp-controller="Account" asp-action="Registration"> Registrate</a>
+                            </span>
                     
 
+                    </div>
+                }
+                <div class="row ">
 
-                    @*//редактировать сообщение может тольок тот кто его написал*@
-                    @if (message.UserId == Model.UserId)
-                    {
-                        <div class="row ">
-                            <a  id="@message.Id" href="#" type="button" data-toggle="ajax-model" data-target="#editMessage"
-                               data-url="@Url.Action("Edit","Messages",new { area = "User" })">
-                                Edit
-                            </a>
+                    <div class="col-sm-12 ">
 
-                        </div>
-                        <br />
-                    }
+                        <textarea name="commentText" id="comment"></textarea>
+                    </div>
+
                 </div>
-
-
-            </div>
-
+            </form>
+            <br />
         }
-        <br />
-        <form id="myForm" asp-area="User" asp-controller="Messages" asp-action="Create" method="post">
-
-            <input class="currentId" type="hidden" name="redirectUrl" value="@ViewBag.Url ">
-            <div class="row">
-
-
-
-                <div class="form-group">
-                    <input id="addMessage" class="btn btn-primary" type="submit" value="Add a new message" />
-                </div>
-
-
-
-            </div>
-            <div class="row ">
-
-                <div class="col-sm-12 ">
-
-                    <textarea name="commentText" id="comment"></textarea>
-                </div>
-
-            </div>
-        </form>
-        <br />
-    }
 
 
 

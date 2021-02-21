@@ -113,7 +113,7 @@ namespace Forum.Controllers
         {
             if (this.ModelState.IsValid)
             {
-               
+                
                    
 
                 var user = await this.userManager.FindByEmailAsync(model.Email);

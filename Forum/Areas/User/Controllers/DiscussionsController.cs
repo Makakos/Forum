@@ -31,7 +31,7 @@ namespace Forum.Areas.User.Controllers
         public IActionResult Create(Discussion discussion,string returnUrl)
         {
 
-
+            
             if (this.ModelState.IsValid)
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

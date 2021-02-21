@@ -46,7 +46,7 @@
                         //выводим по 3 самых новых дискуссии из этой темы
                         @foreach (Discussion discussion in topic.Discussions.OrderByDescending(x=>x.Date).Take(3))
                         {
-                                <div class="row ">
+                                <div class="row border">
                                     <div class="col-sm-4 bg-primary">
 
 

@@ -9,10 +9,10 @@ namespace Forum.Models.ViewModels
     {
         public Discussion Discussion { get; set; }
         public string UserId { get; set; }
-        public DiscussionViewModel(Discussion discussion,string id)
+        public DiscussionViewModel(Discussion discussion,string userId)
         {
             Discussion = discussion;
-            UserId = id;
+            UserId =  userId;
         }
     }
 }
