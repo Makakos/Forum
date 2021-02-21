@@ -1,0 +1,38 @@
+﻿@model Message
+
+
+<div class="modal fade" id="editMessage">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form asp-area="User" asp-controller="Messages" asp-action="Edit" method="post">
+                <input type="hidden" id="redirectTo" name="redirectTo">
+                <input type="hidden" asp-for="Id" id="messageId">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="editMessageLabel">Edit message</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>x</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    
+                    <textarea asp-for="Text" class="form-control"id="txtArea" cols="100" rows="15"></textarea>
+                    <span asp-validation-for="Text" class="text-danger"></span>
+                         
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-save="modal">Save</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+
+
