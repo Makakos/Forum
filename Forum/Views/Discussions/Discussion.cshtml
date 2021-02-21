@@ -4,16 +4,16 @@
     ViewData["Title"] = $"{Model.Discussion.Name}-MF Forum";
 }
 
-<script src="~/js/ckeditor/ckeditor.js" type="text/javascript"></script>
+
 
 <div id="PlaceHolderHere">
-    <input type="hidden" class="currentUrl" value="@ViewBag.Url">
+    <input type="hidden" class="currentUrl" value="@TempData["Url"]">
 
 </div>
-
+<div><input type="hidden" id="discussionId" value="@Model.Discussion.Id"/></div>
 <div>
 
-    <div width="100%" ;>
+    <iv width="100%" ;>
         @if (Model.Discussion != null)
         {
 
@@ -53,56 +53,70 @@
 
             <br />
             <br />
-
-            @foreach (Message message in Model.Discussion.Messages)
-            {
-
-
-
-                <div class="row border forBorder">
-
-                    <div class="col-sm-2 bg-dark">
-
-                        <div class="row ">
-                            @if (message.User.Avatar != null)
-                            {
-                                <img style='width:100%; max-height:140px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(message.User.Avatar))" />
-                            }
-                        </div>
-                        <div class="row text-light">
-                            @message.User.UserName
-                        </div>
-                        <div class="row text-light">
-                            @message.Date
-                        </div>
-                    </div>
-
-                    <div class="col-sm-10 ">
-
-                        <p id="text @message.Id">@($"{ message.Text}")</p>
+           
+                @foreach (Message message in Model.Discussion.Messages)
+                {
 
 
+                    <div id="message @message.Id">
+                        <div class="row border forBorder">
 
 
-                        @*//редактировать сообщение может тольок тот кто его написал*@
-                        @if (message.UserId == Model.UserId)
-                        {
-                            <div class="row ">
-                                <a id="@message.Id" href="#" type="button" data-toggle="ajax-model" data-target="#editMessage"
-                                   data-url="@Url.Action("Edit","Messages",new { area = "User" })">
-                                    Edit
-                                </a>
+                            <div class="col-sm-2 bg-dark">
 
+                                <div class="row ">
+                                    @if (message.User.Avatar != null)
+                                    {
+                                        <img style='width:100%; max-height:140px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(message.User.Avatar))" />
+                                    }
+                                </div>
+                                <div class="row text-light">
+                                    @message.User.UserName
+                                </div>
+                                <div class="row text-light">
+                                    @message.Date
+                                </div>
                             </div>
-                            <br />
-                        }
+
+                            <div class="col-sm-10 ">
+
+                                <p id="text @message.Id">@($"{ message.Text}")</p>
+
+
+
+
+                                @*//редактировать сообщение может тольок тот кто его написал*@
+                                @if (message.UserId == Model.UserId)
+                                {
+                                    <div class="row ">
+                                        <a id="@message.Id" class="editMessageLink" href="#" type="button" data-toggle="ajax-model"
+                                           data-target="#editMessage">
+                                            Edit
+                                        </a>
+
+                                    </div>
+                                    <br />
+                                }
+                                @*//удалять сообщение может только админ*@
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <div class="row ">
+                                        <button class="deleteMessageButton" id="@message.Id" class="btn btn-danger" type="button"
+                                                data-url="@Url.Action("Delete","Messages",new { area = "User" })">
+                                            Delete message
+                                        </button>
+
+                                    </div>
+                                }
+                            </div>
+
+
+                        </div>
                     </div>
+                    <br />
 
-
-                </div>
-                <br />
-
-            }
+                }
+            
             <br />
             <form id="myForm" asp-area="User" asp-controller="Messages" asp-action="Create" method="post">
 
@@ -128,7 +142,7 @@
                             <span>
                                 To write messages
                                 <a href="@Url.Action("Login", "Account", new { returnUrl=TempData["Url"]})"> Log in </a> or
-                                <a asp-controller="Account" asp-action="Registration"> Registrate</a>
+                                <a href="@Url.Action("Registration", "Account", new { returnUrl=TempData["Url"]})"> Registrate</a>
                             </span>
                     
 
@@ -138,7 +152,7 @@
 
                     <div class="col-sm-12 ">
 
-                        <textarea name="commentText" id="comment"></textarea>
+                        <textarea name="commentText" id="comment" cols="160" rows="10"></textarea>
                     </div>
 
                 </div>
@@ -153,4 +167,4 @@
     </div>
 </div>
 
-<script type="text/javascript">CKEDITOR.replace('comment');</script>
+

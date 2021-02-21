@@ -24,8 +24,8 @@ namespace Forum.Controllers
             if (this.User.Identity.IsAuthenticated)
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var user = this.dataManager.usersRepository.GetUserById(userId);
-                this.ViewBag.UserName = user.UserName;
+                var user = this.dataManager.usersRepository.GetUserById(userId)??null;
+                this.ViewBag.UserName = user.UserName??"";
             }
 
             List<Topic> topics= dataManager.topicsRepository.GetTopics().Include(x => x.Discussions).ToList(); 

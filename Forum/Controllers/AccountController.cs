@@ -26,14 +26,14 @@ namespace Forum.Controllers
         }
 
         [HttpGet]
-        public IActionResult Registration()
+        public IActionResult Registration(string returnUrl)
         {
-            
+            this.ViewBag.ReturnURL = returnUrl;
             return this.View(new RegistrationViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Registration(RegistrationViewModel model)
+        public async Task<IActionResult> Registration(RegistrationViewModel model,string returnUrl)
         {
             if (this.ModelState.IsValid)
             {

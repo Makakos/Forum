@@ -1,5 +1,6 @@
 ﻿using Forum.Models;
 using Forum.Servises;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -25,9 +26,9 @@ namespace Forum.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string commentText,string redirectUrl)
+        public IActionResult Create(string commentText, string redirectUrl)
         {
-            
+
             int? nullableDiscussonId = null;
             if (TempData["DiscussionId"] != null)
             {
@@ -38,8 +39,7 @@ namespace Forum.Controllers
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 Forum.Models.User user = this.dataManager.usersRepository.GetUserById(userId);
-                commentText = commentText.Remove(commentText.Length - 6);
-                commentText = commentText.Remove(0, 3);
+                
 
 
 
@@ -51,7 +51,7 @@ namespace Forum.Controllers
                 message.DiscussionId = discussionId;
                 message.Discussion = dataManager.discussionsRepository.GetDiscussionById(discussionId);
                 dataManager.messagessRepository.SaveMessage(message);
-               
+
             }
             return Redirect(redirectUrl);
         }
@@ -60,12 +60,12 @@ namespace Forum.Controllers
         public IActionResult Edit()
         {
             Message message = new Message();
-            
+
             return PartialView("_EditMessagePartial", message);
         }
 
         [HttpPost]
-        public IActionResult Edit(Message message,string redirectTo)
+        public IActionResult Edit(Message message, string redirectTo)
         {
             Message editedMessage = dataManager.messagessRepository.GetMessageById(message.Id);
             editedMessage.Text = message.Text;
@@ -73,5 +73,14 @@ namespace Forum.Controllers
             return Redirect(redirectTo);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult Delete(string Id,string RedirectUrl)
+        {
+            int messageId = Convert.ToInt32(Id);
+        
+            //dataManager.messagessRepository.DeleteMessageById(messageId);
+            return Redirect(RedirectUrl);
+        }
     }
 }

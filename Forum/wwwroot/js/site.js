@@ -2,15 +2,14 @@
 
 $(function () {
 
-    
-    $('a[data-toggle="ajax-model"]').click(function (event) {
+    $('.editMessageLink').click(function (event) {
 
         var PlaceHolderElement = $('#PlaceHolderHere');
-        var mesId = $('a[data-toggle="ajax-model"]').attr("id");
+        var mesId = event.target.id;
         var returnToUrl = PlaceHolderElement.find(".currentUrl").val();
         var messageText = $(`p[id="text ${mesId}"]`).text();
 
-        var url = $(this).data('url');
+        var url = "/User/Messages/Edit";
         $.get(url).done(function (data) {
             PlaceHolderElement.html(data);
             PlaceHolderElement.find("#messageId").val(mesId);
@@ -20,10 +19,21 @@ $(function () {
         })
     })
 
+    $('.deleteMessageButton').click(function (event) {
+
+        var url = "/User/Messages/Delete";
+        var discussionId = $('input[id="discussionId"]').val();
+        var redirectUrl = `/Discussions/Discussion/${discussionId}`;
+        var mesId = event.target.id;
+        $(`div[id="message ${mesId}"`).hide();
+        $.post(url, { Id: mesId, RedirectUrl: redirectUrl }).done(function () { alert("second success"); })
+
+
+    })
    
     
 })
 
 
-
+var jqxhr = $.post("example.php", function () {alert("success");}).done(function () {alert("second success");})
 
