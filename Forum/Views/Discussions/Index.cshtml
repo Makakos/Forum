@@ -33,16 +33,16 @@
 
                 <div class="col-sm-4 badge-warning">
                     <p class="alert-dark">
-                        @if (Model.discussions.Count() == 1)
+                        @if (Model.discussAndLastMess.Keys.Count() == 1)
                         {
 
-                            <h5 style="display:block"> Total: @Model.discussions.Count() discussion </h5>
+                            <h5 style="display:block"> Total: 1 discussion </h5>
 
                         }
                         else
                         {
                        
-                            <h5 style="display:block"> Total: @Model.discussions.Count() discussions </h5>
+                          <h5 style="display:block"> Total: @Model.discussAndLastMess.Keys.Count() discussions </h5>
                        
                          }
                     </p>
@@ -89,7 +89,7 @@
                 </div>
 
             </div>
-            @foreach (Discussion discussion in Model.discussions.OrderByDescending(x=>x.Date))
+            @foreach (var discussionWithLastComment in Model.discussAndLastMess.OrderByDescending(x=>x.Key.Date))
             {
                 <div class="row ">
                     <div class="col-sm-4 bg-primary">
@@ -97,8 +97,10 @@
 
                         <div class="row ">
 
-                            <a class="text-light" asp-area="" asp-controller="Discussions" asp-action="Discussion" asp-route-id="@discussion.Id">
-                                <h3 style="display:block"> @($"{discussion.Name}")</h3>
+                            <a class="text-light" asp-area="" asp-controller="Discussions" 
+                               asp-action="Discussion" asp-route-id="@discussionWithLastComment.Key.Id">
+
+                                <h3 style="display:block"> @($"{discussionWithLastComment.Key.Name}")</h3>
                             </a>
 
 
@@ -109,7 +111,7 @@
                         <div class="row ">
 
                             <p class="text-light">
-                                <h4 style="display:block"> @($"{discussion.Description}")</h4>
+                                <h4 style="display:block"> @($"{discussionWithLastComment.Key.Description}")</h4>
                             </p>
 
 
@@ -117,13 +119,13 @@
                     </div>
 
                     <div class="col-sm-4 bg-primary">
-                        @if (Model.lastMessages.FirstOrDefault() != null)
+                        @if (discussionWithLastComment.Value.Text != null)
                         {
 
                             <div class="row ">
 
                                 <p class="text-light">
-                                    <h4 style="display:block"> @($"{  Model.lastMessages.Where(x => x.DiscussionId == discussion.Id).FirstOrDefault().Text??""}")</h4>
+                                    <h4 style="display:block"> @($"{  discussionWithLastComment.Value.Text}")</h4>
                                 </p>
 
 
@@ -131,7 +133,7 @@
                             <div class="row ">
 
                                 <p class="text-light">
-                                    <h5 style="display:block"> @($"{  Model.lastMessages.Where(x => x.DiscussionId == discussion.Id).FirstOrDefault().Date}")</h5>
+                                    <h5 style="display:block"> @($"{  discussionWithLastComment.Value.Date}")</h5>
                                 </p>
 
 
@@ -142,11 +144,12 @@
                             <div class="row ">
 
                                 <p class="text-light">
-                                    <h4 style="display:block"> ---- </h4>
+                                    <h4 style="display:block"> No comments yet </h4>
                                 </p>
 
 
                             </div>
+                            <br />
                         }
                     </div>
                 </div>
