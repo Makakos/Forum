@@ -41,7 +41,7 @@ $(function () {
         var redirectUrl = `/Discussions/Discussion/${discussionId}`;
        
 
-        $.post(url, { TextMessage: message, RedirectUrl: redirectUrl }).done(function () { location.reload(); })
+        $.post(url, { commentText: message, RedirectUrl: redirectUrl }).done(function () { location.reload(); })
 
 
     })
