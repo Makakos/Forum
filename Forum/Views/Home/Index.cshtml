@@ -3,7 +3,6 @@
 
 
 
-
 <div class="text-center">
     <h2 class="display-4">Welcome</h2>
     @if (User.Identity.IsAuthenticated)
@@ -14,6 +13,27 @@
 
 
 <div>
+    @if (User.IsInRole("Admin"))
+    {
+        <p>
+
+            <button data-toggle="collapse" data-target="#addTopic" aria-expanded="false" aria-controls="collapseExample"
+                    type="button" class="btn btn-success">
+                +Add a new topic
+            </button>
+
+        </p>
+            <div class="collapse card" id="addTopic">
+                <div class="card-body">
+                    <input id="newTopicArea" placeholder="Name of a new topic"/>
+                    
+                </div>
+                <div class="card-footer">
+                    <button id="newTopicSubmition" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        }
+    <br />
     <h2>Topics:</h2>
     <div width="100%" ;>
         @if (Model != null)
@@ -21,71 +41,71 @@
             @foreach (Topic topic in Model)
             {
 
-                        <div class="row ">
+                <div class="row ">
 
-                            <div class="col-sm-4 badge-success">
+                    <div class="col-sm-4 badge-success">
 
-                                <a class="text-light" asp-area="" asp-controller="Discussions" asp-action="Index" asp-route-id="@topic.Id">
-                                    <h3 style="display:block"> @($"{topic.Name}")</h3>
+                        <a class="text-light" asp-area="" asp-controller="Discussions" asp-action="Index" asp-route-id="@topic.Id">
+                            <h3 style="display:block"> @($"{topic.Name}")</h3>
+                        </a>
+                    </div>
+                    <div class="col-sm-4 badge-success">
+
+                        <p class="text-light">
+                            <h3 style="display:block">Discussion name</h3>
+                        </p>
+                    </div>
+                    <div class="col-sm-4 badge-success">
+
+                        <p class="text-light">
+                            <h3 style="display:block"> Creation time</h3>
+                        </p>
+                    </div>
+
+                </div>
+                //выводим по 3 самых новых дискуссии из этой темы
+                @foreach (Discussion discussion in topic.Discussions.OrderByDescending(x => x.Date).Take(3))
+                {
+                    <div class="row border">
+                        <div class="col-sm-4 bg-primary">
+
+
+                            <div class="row ">
+
+                                <a class="text-light" asp-controller="Discussions" asp-action="Discussion" asp-route-id="@discussion.Id">
+                                    <h3 style="display:block"> @($"{discussion.Name}")</h3>
                                 </a>
-                            </div>
-                            <div class="col-sm-4 badge-success">
 
-                                <p class="text-light" >
-                                    <h3 style="display:block">Discussion name</h3>
-                                </p>
+
                             </div>
-                            <div class="col-sm-4 badge-success">
+                        </div>
+
+                        <div class="col-sm-4 bg-primary">
+                            <div class="row ">
 
                                 <p class="text-light">
-                                    <h3 style="display:block"> Creation time</h3>
+                                    <h4 style="display:block"> @($"{discussion.Description}")</h4>
                                 </p>
+
+
                             </div>
-
                         </div>
-                        //выводим по 3 самых новых дискуссии из этой темы
-                        @foreach (Discussion discussion in topic.Discussions.OrderByDescending(x=>x.Date).Take(3))
-                        {
-                                <div class="row border">
-                                    <div class="col-sm-4 bg-primary">
+
+                        <div class="col-sm-4 bg-primary">
+                            <div class="row ">
+
+                                <p class="text-light">
+                                    <h4 style="display:block"> @($"{discussion.Date}")</h4>
+                                </p>
 
 
-                                        <div class="row ">
-
-                                            <a class="text-light" asp-area="" asp-controller="Discussions" asp-action="Discussion" asp-route-id="@discussion.Id">
-                                                <h3 style="display:block"> @($"{discussion.Name}")</h3>
-                                            </a>
+                            </div>
+                        </div>
+                    </div>
 
 
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-4 bg-primary">
-                                        <div class="row ">
-
-                                            <p class="text-light">
-                                                <h4 style="display:block"> @($"{discussion.Description}")</h4>
-                                            </p>
-
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-4 bg-primary">
-                                        <div class="row ">
-
-                                            <p class="text-light">
-                                                <h4 style="display:block"> @($"{discussion.Date}")</h4>
-                                            </p>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                           
-                        }
-            <br />
+                }
+                <br />
             }
 
 
@@ -96,9 +116,9 @@
 
 
 
-            }
+        }
 
 
 
-        </div>
+    </div>
 </div>

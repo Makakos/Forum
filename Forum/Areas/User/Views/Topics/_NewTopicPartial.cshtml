@@ -1,0 +1,37 @@
+﻿@model Topic
+
+
+<div class="modal fade" id="addTopic">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form asp-area="User" asp-controller="Topics" asp-action="Add" method="post">
+               
+                <div class="modal-header">
+                    <h4 class="modal-title" >New topic</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>x</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+
+                    <textarea asp-for="Name" class="form-control"  cols="100" rows="3"></textarea>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-save="modal">Save</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+
+

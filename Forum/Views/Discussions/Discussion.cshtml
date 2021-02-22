@@ -13,7 +13,7 @@
 <div><input type="hidden" id="discussionId" value="@Model.Discussion.Id"/></div>
 <div>
 
-    <iv width="100%" ;>
+    <div width="100%" ;>
         @if (Model.Discussion != null)
         {
 
@@ -101,7 +101,7 @@
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <div class="row ">
-                                        <button class="deleteMessageButton" id="@message.Id" class="btn btn-danger" type="button"
+                                        <button class="deleteMessageButton btn btn-danger" id="@message.Id" type="button"
                                                 data-url="@Url.Action("Delete","Messages",new { area = "User" })">
                                             Delete message
                                         </button>
@@ -120,7 +120,7 @@
             <br />
             <form id="myForm" asp-area="User" asp-controller="Messages" asp-action="Create" method="post">
 
-                <input class="currentId" type="hidden" name="redirectUrl" value="@ViewBag.Url ">
+                <input class="currentId" type="hidden" name="redirectUrl" value="@TempData["Url"] ">
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="row">
@@ -166,5 +166,4 @@
 
     </div>
 </div>
-
 

@@ -138,3 +138,8 @@ body {
     justify-content: flex-end;
     align-items:end;
 }
+
+#newTopicArea {
+    border: none;
+    outline:none;
+}

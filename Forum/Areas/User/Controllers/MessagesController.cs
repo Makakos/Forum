@@ -26,7 +26,7 @@ namespace Forum.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string commentText, string redirectUrl)
+        public IActionResult Create(string commentText, string RedirectUrl)
         {
 
             int? nullableDiscussonId = null;
@@ -53,7 +53,7 @@ namespace Forum.Controllers
                 dataManager.messagessRepository.SaveMessage(message);
 
             }
-            return Redirect(redirectUrl);
+            return Redirect(RedirectUrl);
         }
 
         [HttpGet]
@@ -69,6 +69,10 @@ namespace Forum.Controllers
         {
             Message editedMessage = dataManager.messagessRepository.GetMessageById(message.Id);
             editedMessage.Text = message.Text;
+            if(redirectTo==null)
+            {
+                redirectTo = $"/Discussions/Discussion/{editedMessage.DiscussionId}";
+            }
             dataManager.messagessRepository.SaveMessage(editedMessage);
             return Redirect(redirectTo);
         }
@@ -79,7 +83,7 @@ namespace Forum.Controllers
         {
             int messageId = Convert.ToInt32(Id);
         
-            //dataManager.messagessRepository.DeleteMessageById(messageId);
+            dataManager.messagessRepository.DeleteMessageById(messageId);
             return Redirect(RedirectUrl);
         }
     }

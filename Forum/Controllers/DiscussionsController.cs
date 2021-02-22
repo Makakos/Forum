@@ -27,20 +27,28 @@ namespace Forum.Controllers
             return View(topicViewModel);
         }
 
-        public IActionResult Discussion(int id)
+       
+        public IActionResult Discussion(int id=0)
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-          
-            TempData["DiscussionId"] = id;
-           
-            TempData["Url"] = ViewBag.Url;
-            Discussion discussion = dataManager.discussionsRepository.GetDiscussionById(id);
-            if (dataManager.usersRepository.GetUserById(discussion.UserId) != null)
+            if (id != 0)
             {
-                discussion.User = dataManager.usersRepository.GetUserById(discussion.UserId);
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                TempData["DiscussionId"] = id;
+
+                TempData["Url"] = $"/Discussions/Discussion/{id}";
+                Discussion discussion = dataManager.discussionsRepository.GetDiscussionById(id);
+                if (dataManager.usersRepository.GetUserById(discussion.UserId) != null)
+                {
+                    discussion.User = dataManager.usersRepository.GetUserById(discussion.UserId);
+                }
+                DiscussionViewModel discussionViewModel = new DiscussionViewModel(discussion, userId);
+                return View(discussionViewModel);
             }
-            DiscussionViewModel discussionViewModel = new DiscussionViewModel(discussion, userId);
-            return View(discussionViewModel);
+            else
+            {
+                return View();
+            }
         }
 
 
