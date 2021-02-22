@@ -118,7 +118,7 @@
                 }
             
             <br />
-            <form id="myForm" asp-area="User" asp-controller="Messages" asp-action="Create" method="post">
+            <div>
 
                 <input class="currentId" type="hidden" name="redirectUrl" value="@TempData["Url"] ">
                 @if (User.Identity.IsAuthenticated)
@@ -156,7 +156,7 @@
                     </div>
 
                 </div>
-            </form>
+            </div>
             <br />
         }
 

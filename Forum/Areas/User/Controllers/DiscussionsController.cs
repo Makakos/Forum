@@ -19,7 +19,7 @@ namespace Forum.Areas.User.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
 
 
@@ -31,19 +31,19 @@ namespace Forum.Areas.User.Controllers
         public IActionResult Create(Discussion discussion,string returnUrl)
         {
 
-            
+            int? nullableTopicId = null;
+            if (TempData["TopicId"] != null)
+            {
+                nullableTopicId = TempData["TopicId"] as int?;
+            }
+            int topicId = nullableTopicId ?? 0;
             if (this.ModelState.IsValid)
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 Forum.Models.User user = this.dataManager.usersRepository.GetUserById(userId);
-                int? nullableTopicId = null;
-                if (TempData["TopicId"] != null)
-                {
-                    nullableTopicId = TempData["TopicId"] as int?;
-                }
-                int topicId = nullableTopicId ?? 0;
 
 
+                discussion.Id = 0;
                 discussion.Date = DateTime.Now;
                 discussion.UserId = userId;
                 discussion.User = user;
@@ -59,7 +59,7 @@ namespace Forum.Areas.User.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Discussions");
+                return Redirect($"/Discussions/Index/{topicId}");
             }
          
         }

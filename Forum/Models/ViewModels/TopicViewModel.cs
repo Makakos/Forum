@@ -11,12 +11,12 @@ namespace Forum.Models.ViewModels
         
         public List<Discussion> discussions { get; set; }
         public List<Message> lastMessages { get; set; }
-        public string TopicName{get;set;}
+        public Topic Topic{get;set;}
 
         
         public TopicViewModel(DataManager dataManager,int id)
         {
-            TopicName = dataManager.topicsRepository.GetTopicById(id).Name;
+            Topic = dataManager.topicsRepository.GetTopicById(id);
             discussions = dataManager.topicsRepository.GetTopicById(id).Discussions;
             lastMessages = new List<Message>();
             
