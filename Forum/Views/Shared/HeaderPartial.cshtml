@@ -1,11 +1,14 @@
 ﻿<header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
+
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@Config.ProjectName</a>
-            @if(User.IsInRole("Admin"))
+            @if (User.Identity.IsAuthenticated)
             {
-                <span>Admin account</span>
+                <span >Hi,@User.Identity.Name 
+                @if (User.IsInRole("Admin")) { <span class="font-weight-bold"> Admin account</span> }</span>
             }
+          
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -17,6 +20,9 @@
                 <ul class="navbar-nav flex-grow-1 flex-container ">
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="User" asp-controller="Account" asp-action="Profile">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark"  asp-controller="Account" asp-action="Registration">Registration</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>

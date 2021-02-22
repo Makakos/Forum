@@ -38,6 +38,13 @@ namespace Forum.Models
                 NormalizedName = "USER"
             });
 
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Id = "54321g86-1846-3ag8-v38q-h387ae1b6eab",
+                Name = "Admin",
+                NormalizedName = "ADMIN"
+            });
+
             modelBuilder.Entity<User>().HasData(new User
             {
                 Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
@@ -64,17 +71,68 @@ namespace Forum.Models
                 SecurityStamp = string.Empty
             });
 
+            //Makakos-user and admin
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = "44546e06-8719-4ad8-b88a-f271ae9d6eab",
+                UserId = "3b62472e-4f66-49fa-a20f-e7685b9565d8"
+            });
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
                 RoleId = "44546e06-8719-4ad8-b88a-f271ae9d6eab",
                 UserId = "3b62472e-4f66-49fa-a20f-e7685b9565d8"
             });
 
+
+            //TestUser-just user
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
                 RoleId = "44546e06-8719-4ad8-b88a-f271ae9d6eab",
                 UserId = "6g29322e-4f66-49fa-a20f-e7685b9565d8"
             });
+
+            //3 topics by default
+            modelBuilder.Entity<Topic>().HasData(new Topic {
+                Id=1,
+                Name="C#"
+            });
+            modelBuilder.Entity<Topic>().HasData(new Topic
+            {
+                Id = 2,
+                Name = "Java"
+            });
+            modelBuilder.Entity<Topic>().HasData(new Topic
+            {
+                Id = 3,
+                Name = "Python"
+            });
+
+            //2 discussions by default
+            User makakos = Users.Where(x => x.Id == "6g29322e-4f66-49fa-a20f-e7685b9565d8").SingleOrDefault();
+            Topic cSharp=Topics.Where(x => x.Id == 1).SingleOrDefault();
+            modelBuilder.Entity<Discussion>().HasData(new Discussion
+            {
+                Id = 1,
+                Name="What is LINQ",
+                Description = "I need to use LINQ but I dont know how",
+                Date=DateTime.Now,
+                UserId= "6g29322e-4f66-49fa-a20f-e7685b9565d8",
+                User=makakos,
+                TopicId=1,
+                Topic=cSharp
+            });
+            modelBuilder.Entity<Discussion>().HasData(new Discussion
+            {
+                Id = 2,
+                Name = "Interfaces",
+                Description = "How to implement intefaces?",
+                Date = DateTime.Now,
+                UserId = "6g29322e-4f66-49fa-a20f-e7685b9565d8",
+                User = makakos,
+                TopicId = 1,
+                Topic = cSharp
+            });
+
 
         }
 
