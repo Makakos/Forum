@@ -29,8 +29,7 @@ namespace Forum.Models.ViewModels
 
         [Display(Name = "Phone number")]
         [Phone]
-        [MinLength(10, ErrorMessage = "Phone length must be at least 10 symbols")]
-        [MaxLength(13, ErrorMessage = "Phone length must be not less than 13 symbols")]
+        [StringLength(10,ErrorMessage ="Phone may contain 10 symbols")]
         public string PhoneNumber { get; set; }
     }
 }

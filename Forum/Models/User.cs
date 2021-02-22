@@ -8,6 +8,7 @@ namespace Forum.Models
 {
     public class User : IdentityUser
     {
+        
         public int Years { get; set; }
         public byte[] Avatar { get; set; }
         public List<Message> Messages { get; set; }

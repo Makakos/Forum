@@ -9,6 +9,7 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Forum.Controllers
 {
@@ -35,6 +36,19 @@ namespace Forum.Controllers
         [HttpPost]
         public async Task<IActionResult> Registration(RegistrationViewModel model,string returnUrl)
         {
+
+            string emailPattern = "^[A-Za-z][A-Za-z0-9]*@[a-z]{1,}.[a-z]*";
+           
+            if (model.Email==null)
+            {
+                ModelState.AddModelError("Email", "You didn`t write your email");
+                return this.View(model);
+            }
+            if (!Regex.IsMatch(model.Email, emailPattern))
+            {
+                ModelState.AddModelError("Email","Wrong email");
+            }
+  
             if (this.ModelState.IsValid)
             {
               
@@ -132,8 +146,15 @@ namespace Forum.Controllers
                         
                         return this.Redirect(returnUrl ?? "/");
                     }
+                    else
+                    {
+                        ModelState.AddModelError("Password", "Wrong password");
+                    }
                 }
-
+                else 
+                {
+                    ModelState.AddModelError("Email","There is no such an emails");
+                }
               
                 this.ModelState.AddModelError(nameof(LoginViewModel), "Wrong login or password");
             }

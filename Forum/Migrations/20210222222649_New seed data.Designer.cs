@@ -4,14 +4,16 @@ using Forum.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Forum.Migrations
 {
     [DbContext(typeof(ForumDBContext))]
-    partial class ForumDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210222222649_New seed data")]
+    partial class Newseeddata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

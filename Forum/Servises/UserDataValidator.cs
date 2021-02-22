@@ -13,14 +13,14 @@ namespace Forum.Servises
         public Task<IdentityResult> ValidateAsync(UserManager<User> manager, User user)
         {
             List<IdentityError> errors = new List<IdentityError>();
-            string mailPattern = @"^(?("")(""[^""]+?""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
-                @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9]{2,17}))$";
+            string emailPattern = "^[A-Za-z][A-Za-z0-9]*@[a-z]*.com";
+           
             //string phonePattern = @"+380\d{9}";
 
-            //if(!Regex.IsMatch(user.Email,mailPattern))
-            //{
-            //    errors.Add(new IdentityError { Description = "You entered wrong email" });
-            //}
+            if (!Regex.IsMatch(user.Email, emailPattern))
+            {
+                errors.Add(new IdentityError { Description = $"Email {user.Email} is not available"});
+            }
             //if (!Regex.IsMatch(user.PhoneNumber, phonePattern))
             //{
             //    errors.Add(new IdentityError { Description = "You entered wrong phone" });
