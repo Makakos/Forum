@@ -55,7 +55,7 @@ namespace Cinema.Areas.UserArea.Controllers
                     {
                         imageData = binaryReader.ReadBytes((int)userViewModel.Avatar.Length);
                     }
-                    // установка массива байтов
+                  
                     user.Avatar = imageData;
                 }
                 //при изменении почты и телефона они становятся не подтвержденными

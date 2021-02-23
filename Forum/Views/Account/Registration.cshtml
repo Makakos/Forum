@@ -1,6 +1,7 @@
 ﻿@model RegistrationViewModel
 <h2>Registratin </h2>
 <form method="post" asp-controller="Account" asp-action="Registration" asp-route-returnUrl="@ViewBag.ReturnUrl">
+    <div asp-validation-summary="ModelOnly"></div>
     <div>
         <label asp-for="Name"></label><br />
         <input asp-for="Name" />

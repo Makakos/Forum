@@ -42,7 +42,6 @@ namespace Forum
             services.AddDbContext<ForumDBContext>(x => x.UseSqlServer(Config.ConnectionString));
 
             //âàëèäàöèÿ
-            services.AddTransient<IUserValidator<User>, UserDataValidator>();
             services.AddIdentity<User, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
@@ -52,7 +51,7 @@ namespace Forum
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireDigit = false;
-                options.User.AllowedUserNameCharacters = "àáâãäå¸æçèéêëìíîïğñòóôõö÷øùúûüışÿÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÚÛÜİŞß";
+                options.User.AllowedUserNameCharacters = "abcdefghijklmopristuvwxyzABCDEFJHIJKLMNOPRISTUVWXYZàáâãäå¸æçèéêëìíîïğñòóôõö÷øùúûüışÿÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÚÛÜİŞß";
             }).AddEntityFrameworkStores<ForumDBContext>().AddDefaultTokenProviders();
 
             services.ConfigureApplicationCookie(options =>

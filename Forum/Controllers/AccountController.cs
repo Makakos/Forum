@@ -29,7 +29,7 @@ namespace Forum.Controllers
         [HttpGet]
         public IActionResult Registration(string returnUrl)
         {
-            this.ViewBag.ReturnURL = returnUrl;
+            this.ViewBag.ReturnUrl = returnUrl;
             return this.View(new RegistrationViewModel());
         }
 
@@ -37,8 +37,11 @@ namespace Forum.Controllers
         public async Task<IActionResult> Registration(RegistrationViewModel model,string returnUrl)
         {
 
-            string emailPattern = "^[A-Za-z][A-Za-z0-9]*@[a-z]{1,}.[a-z]*";
-           
+            string emailPattern = "^[A-Za-z][A-Za-z0-9.]*@[a-z]{1,}.[a-z]*";
+            if (model.PhoneNumber==null || model.PhoneNumber.Length!=10)
+            {
+                ModelState.AddModelError("PhoneNumber", "Phone nuber must be 10 symbols long");
+            }
             if (model.Email==null)
             {
                 ModelState.AddModelError("Email", "You didn`t write your email");
@@ -74,21 +77,29 @@ namespace Forum.Controllers
 
                         await this.userManager.AddToRoleAsync(user, "User");
 
+                        ViewData["UrlAfterRegistration"] = returnUrl;
+                        return Content("To complete the registration, check your email and follow the link provided in the letter");
                         
-                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {
+                        
                         foreach (var error in result.Errors)
                         {
-                            var errors = result.Errors;
+                           
                             var message = string.Join(", ", result.Errors.Select(x => "Code " + x.Code + " Description" + x.Description));
                             this.ModelState.AddModelError(string.Empty, error.Description);
                         }
                     }
                 }
+
+                else
+                {
+                    this.ModelState.AddModelError(string.Empty, "This email is already registrated");
+                }
             }
 
+           
             return this.View(model);
         }
 
@@ -108,7 +119,7 @@ namespace Forum.Controllers
             }
             var result = await userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
-                return RedirectToAction("Index", "Home");
+                return Redirect("/");
             else
                 return View("Error");
         }
@@ -153,7 +164,7 @@ namespace Forum.Controllers
                 }
                 else 
                 {
-                    ModelState.AddModelError("Email","There is no such an emails");
+                    ModelState.AddModelError("Email", "We have not registered such an email");
                 }
               
                 this.ModelState.AddModelError(nameof(LoginViewModel), "Wrong login or password");

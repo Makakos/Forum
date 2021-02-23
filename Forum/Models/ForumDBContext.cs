@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,7 +24,7 @@ namespace Forum.Models
             : base(options)
         {
         }
-
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -56,6 +57,7 @@ namespace Forum.Models
                 PasswordHash = new PasswordHasher<User>().HashPassword(null, "qwerty1337"),
                 PhoneNumber = "+380974675806",
                 SecurityStamp = string.Empty
+                
             });
 
             modelBuilder.Entity<User>().HasData(new User
@@ -107,7 +109,7 @@ namespace Forum.Models
                 Name = "Python"
             });
 
-            //2 discussions by default
+            //5 discussions by default
             modelBuilder.Entity<Discussion>().HasData(new Discussion
             {
                 Id = 1,
@@ -123,8 +125,35 @@ namespace Forum.Models
                 Name = "Interfaces",
                 Description = "How to implement intefaces?",
                 Date = DateTime.Now,
+                UserId = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
+                TopicId = 1
+            });
+            modelBuilder.Entity<Discussion>().HasData(new Discussion
+            {
+                Id = 3,
+                Name = "OOP",
+                Description = "What is incapsulation?",
+                Date = DateTime.Now,
                 UserId = "6g29322e-4f66-49fa-a20f-e7685b9565d8",
                 TopicId = 1
+            });
+            modelBuilder.Entity<Discussion>().HasData(new Discussion
+            {
+                Id = 4,
+                Name = "Java vs C#",
+                Description = "Which lenguage should i choose?",
+                Date = DateTime.Now,
+                UserId = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
+                TopicId = 2
+            });
+            modelBuilder.Entity<Discussion>().HasData(new Discussion
+            {
+                Id = 5,
+                Name = "Array",
+                Description = "how to declare array in python",
+                Date = DateTime.Now,
+                UserId = "6g29322e-4f66-49fa-a20f-e7685b9565d8",
+                TopicId = 3
             });
 
 
