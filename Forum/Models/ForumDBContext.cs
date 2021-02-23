@@ -156,7 +156,79 @@ namespace Forum.Models
                 TopicId = 3
             });
 
-
+            //10 messages by default
+            modelBuilder.Entity<Message>().HasData(new Message
+            {
+                Id = 1,
+                Text = "test message 1",
+                Date = DateTime.Now,
+                UserId = "6g29322e-4f66-49fa-a20f-e7685b9565d8",
+                DiscussionId = 1
+            });
+            modelBuilder.Entity<Message>().HasData(new Message
+            {
+                Id = 2,
+                Text = "test message 2",
+                Date = DateTime.Now,
+                UserId = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
+                DiscussionId = 1
+            });
+            modelBuilder.Entity<Message>().HasData(new Message
+            {
+                Id = 3,
+                Text = "test message 3",
+                Date = DateTime.Now,
+                UserId = "6g29322e-4f66-49fa-a20f-e7685b9565d8",
+                DiscussionId = 2
+            });
+            modelBuilder.Entity<Message>().HasData(new Message
+            {
+                Id = 4,
+                Text = "test message 4",
+                Date = DateTime.Now,
+                UserId = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
+                DiscussionId = 2
+            });
+            modelBuilder.Entity<Message>().HasData(new Message
+            {
+                Id = 5,
+                Text = "test message 5",
+                Date = DateTime.Now,
+                UserId = "6g29322e-4f66-49fa-a20f-e7685b9565d8",
+                DiscussionId = 3
+            });
+            modelBuilder.Entity<Message>().HasData(new Message
+            {
+                Id = 6,
+                Text = "test message 6",
+                Date = DateTime.Now,
+                UserId = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
+                DiscussionId = 3
+            });
+            modelBuilder.Entity<Message>().HasData(new Message
+            {
+                Id = 7,
+                Text = "test message 7",
+                Date = DateTime.Now,
+                UserId = "6g29322e-4f66-49fa-a20f-e7685b9565d8",
+                DiscussionId = 4
+            });
+            modelBuilder.Entity<Message>().HasData(new Message
+            {
+                Id = 8,
+                Text = "test message 8",
+                Date = DateTime.Now,
+                UserId = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
+                DiscussionId = 4
+            });
+            modelBuilder.Entity<Message>().HasData(new Message
+            {
+                Id = 9,
+                Text = "test message 9",
+                Date = DateTime.Now,
+                UserId = "6g29322e-4f66-49fa-a20f-e7685b9565d8",
+                DiscussionId = 5
+            });
         }
 
     }
