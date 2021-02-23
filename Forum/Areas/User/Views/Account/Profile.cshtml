@@ -13,6 +13,7 @@
     <p>
         <input name="Avatar" type="file" accept="image/*" />
     </p>
+    <span asp-validation-for="Avatar"></span>
 
     <p><strong>Name</strong></p>
     <p><input asp-for="UserName" maxlength="25" size="40" value="@Model.UserName"></p>

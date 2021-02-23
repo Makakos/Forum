@@ -47,6 +47,14 @@ namespace Cinema.Areas.UserArea.Controllers
                 string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 User user = this.manager.usersRepository.GetUserById(userId);
 
+                if (userViewModel.Avatar != null && (userViewModel.Avatar.ContentType!= "image/png" &&
+                    userViewModel.Avatar.ContentType != "image/jpeg" &&
+                    userViewModel.Avatar.ContentType != "image/gif"))
+                {
+                    ModelState.AddModelError("Avatar", "You can choose only images");
+                    return View(user);
+                }
+
                 if (userViewModel.Avatar != null)
                 {
                     byte[] imageData = null;
