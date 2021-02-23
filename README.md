@@ -34,4 +34,8 @@ Admins also can delete messages
 
 As was mentioned before admins can create new topics
 <img src="Site_screenshots/Admin_account_addTopic.png" width="1000">
+
+On the tab "Profile" you can see information about your account, here you can add avatar of your 
+profile(which is not exists by default) and change name, phone number and email
+<img src="Site_screenshots/Profile.png" width="1000"></br></br>
 </h3>
